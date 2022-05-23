@@ -13,12 +13,12 @@
 
     <nav class="navbar"></nav>
     
-<!-- 板規 -->
-    <h1>商品名稱</h1>
-    <h1>價格</h1>
-    <h1>說明</h1>
-    <h1>內容</h1>
-    <h1>內容</h1>
+<form method="post">
+    <h2>商品名稱 <input type="text" name="product"><br></h2>
+    <h2>價格<input type="text" name="price"><br></h2>
+    <h2>說明<input type="text" name="detail"><br></h2>
+</form>
+ 
 <!-- 以下為商品 -->
 
     <footer></footer>

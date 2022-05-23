@@ -14,9 +14,13 @@
     <nav class="navbar"></nav>
     
 <form method="post">
-    <h2>商品名稱 <input type="text" name="product"><br></h2>
-    <h2>價格<input type="text" name="price"><br></h2>
-    <h2>說明<input type="text" name="detail"><br></h2>
+    <h2>商品名稱 </h2><br>
+    <textarea name="product" rows="3" cols="30"></textarea>
+    <h2>價格 </h2><br>
+    <textarea name="price" rows="3" cols="30"></textarea>
+    <h2>說明 </h2><br>
+    <textarea name="product" rows="30" cols="30"></textarea>
+    <h2><input value ="確認"  type="submit"></h2>
 </form>
  
 <!-- 以下為商品 -->

@@ -41,18 +41,18 @@ userImageButton.addEventListener('click', () => {
 
 window.onload = () => {
     let user = JSON.parse(sessionStorage.user || null);
-    if(user != null){ //user in login status
+    if (user != null) { //user in login status
         popuptext.innerHTML = `log in as, ${user.name}`;
         actionBtn.innerHTML = 'log out';
         actionBtn.addEventListener('click', () => {
             sessionStorage.clear();
             location.reload();
         })
-    }else{  //user not login in
+    } else { //user not login in
         popuptext.innerHTML = 'login to order';
         actionBtn.innerHTML = 'login';
         actionBtn.addEventListener('click', () => {
-            location.href = '/login';
+            location.href = '/login.html';
         })
     }
 }

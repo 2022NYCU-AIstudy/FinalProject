@@ -42,11 +42,14 @@
     var btn = document.getElementById('submitBtn1');
     btn.addEventListener('click', function(e) {
         e.preventDefault();
-        createUserWithEmailAndPassword(auth,email,password)
-        .then((cred)=>{
-           console.log('user created',cred.user) 
-        })
-    })
+        firebase.auth().createUserWithEmailAndPassword(email.password)
+        .then(result => {
+            console.log(result)
+         })
+         .catch(function(error) {
+            console.log(error.message)
+         })
+         });
 </script>
 
 </html>

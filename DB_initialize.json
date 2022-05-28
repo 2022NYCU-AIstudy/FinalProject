@@ -1,0 +1,30 @@
+{
+    "test": {
+        "CART": {
+            "UID": {
+                "GID": "",
+                "NUM": ""
+            }
+        },
+        "GOODS": {
+            "ID": "",
+            "NAME": "",
+            "NUM": "",
+            "PRICE": "",
+            "SELLER_ID": "",
+            "TYPE": ""
+        },
+        "HISTORY": {
+            "UID": {
+                "GID": "",
+                "NUM": ""
+            }
+        },
+        "USER": {
+            "ID": "",
+            "MAIL": "",
+            "NAME": "",
+            "PW": ""
+        }
+    }
+}

@@ -1,30 +1,34 @@
 {
-    "test": {
+    "TABLE": {
         "CART": {
             "UID": {
-                "GID": "",
-                "NUM": ""
+                "1": {
+                    "GID": [1, 2],
+                    "NUM": [1, 5]
+                }
             }
         },
         "GOODS": {
-            "ID": "",
-            "NAME": "",
-            "NUM": "",
-            "PRICE": "",
-            "SELLER_ID": "",
-            "TYPE": ""
+            "ID": [1, 2],
+            "NAME": ["水壺", "泡麵"],
+            "NUM": [10, 100],
+            "PRICE": [80, 50],
+            "SELLER_ID": [3, 3],
+            "TYPE": ["生活用品", "食品"]
         },
         "HISTORY": {
             "UID": {
-                "GID": "",
-                "NUM": ""
+                "1": {
+                    "GID": [1],
+                    "NUM": [1]
+                }
             }
         },
         "USER": {
-            "ID": "",
-            "MAIL": "",
-            "NAME": "",
-            "PW": ""
+            "ID": [1, 2, 3],
+            "MAIL": ["test1@gmail.com", "test2@gmail.com", "test3@gmail.com"],
+            "NAME": ["test1", "test2", "test3"],
+            "PW": ["t1", "t2", "t3"]
         }
     }
 }

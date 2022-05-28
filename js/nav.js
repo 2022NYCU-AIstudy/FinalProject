@@ -16,12 +16,12 @@ const createNav = () => {
                         <button class="btn" id="user-btn">Log out</button>
                     </div>
                 </a>
-                <a href="#"><img src="src/cart.png" alt=""></a>
+                <a href="mycart.html"><img src="src/cart.png" alt=""></a>
             </div>
         </div>
         <ul class="links-container">
             <li class="link-item"><a href="#" class="link">關於我們</a></li>
-            <li class="link-item"><a href="#" class="link">拍賣區</a></li>
+            <li class="link-item"><a href="market.html" class="link">拍賣區</a></li>
             <li class="link-item"><a href="#" class="link">廢文區</a></li>
             <li class="link-item"><a href="#" class="link">資源分享</a></li>
         </ul>
@@ -41,18 +41,18 @@ userImageButton.addEventListener('click', () => {
 
 window.onload = () => {
     let user = JSON.parse(sessionStorage.user || null);
-    if(user != null){ //user in login status
+    if (user != null) { //user in login status
         popuptext.innerHTML = `log in as, ${user.name}`;
         actionBtn.innerHTML = 'log out';
         actionBtn.addEventListener('click', () => {
             sessionStorage.clear();
             location.reload();
         })
-    }else{  //user not login in
+    } else { //user not login in
         popuptext.innerHTML = 'login to order';
         actionBtn.innerHTML = 'login';
         actionBtn.addEventListener('click', () => {
-            location.href = '/login';
+            location.href = 'login.html';
         })
     }
 }

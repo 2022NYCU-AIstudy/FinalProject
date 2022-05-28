@@ -25,17 +25,17 @@
         <form id="form" class="" method="get" action="mycart.html">
             <div style="display: inline-block;">
                 <h1 class="">test1</h1>
-                <button id="submitBtn" class="form-control" name="item" value="test1" type="submit"><b>購買</b></button>
+                <button id="submitBtn1" class="submitBtn" name="item" value="test1" type="submit"><b>購買</b></button>
             </div>
 
             <div style="display: inline-block;">
                 <h1 class="">test2</h1>
-                <button id="submitBtn" class="form-control" name="item" value="test2" type="submit"><b>購買</b></button>
+                <button id="submitBtn2" class="submitBtn" name="item" value="test2" type="submit"><b>購買</b></button>
             </div>
 
             <div style="display: inline-block;">
                 <h1 class="">test3</h1>
-                <button id="submitBtn" class="form-control" name="item" value="test3" type="submit"><b>購買</b></button>
+                <button id="submitBtn3" class="submitBtn" name="item" value="test3" type="submit"><b>購買</b></button>
             </div>
         </form>
     </div>
@@ -46,6 +46,25 @@
     <!-- dynamic create navbar -->
     <script src="js/footer.js"></script>
     <!-- dynamic create footer -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"; import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"; const firebaseConfig = { apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
+        authDomain: "database2022-311c8.firebaseapp.com", projectId: "database2022-311c8", storageBucket: "database2022-311c8.appspot.com", messagingSenderId: "15999843002", appId: "1:15999843002:web:31a94923044c50113ee083", measurementId: "G-8HL90VJ2K7"
+        }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app);
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+    <script>
+        firebase.initializeApp({
+            databaseURL: "https://database2022-311c8-default-rtdb.firebaseio.com/"
+        });
+        const database = firebase.database();
+
+        let btn = document.getElementById('submitBtn1');
+        btn.addEventListener('click', function() {
+            database.ref('/').set({
+                test: "tests1"
+            });
+        })
+    </script>
 
 </body>
 

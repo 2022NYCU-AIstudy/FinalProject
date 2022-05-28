@@ -17,7 +17,7 @@
             <input type="email" autocomplete="off" id="email" placeholder="email">
             <input type="password" autocomplete="off" id="password" placeholder="password">
            <!-- <input type="text" autocomplete="off" id="number" placeholder="phone number"> -->         
-            <button class="submit-btn">create account</button>
+            <button class="submit-btn" id="loginBtn">create account</button>
         </div>
         <a href="login.html" class="link">already have an account? Login here</a>
     </div>
@@ -36,11 +36,12 @@
     });
     const database = firebase.database(); 
     */
-    const signupForm = document.querySelector('.container')
-    signupForm.addEventListener('submit',(e)=>{
+    var email=document.getElementById("email");
+    var password=document.getElementById("password");
+    var loginBtn=document.getElementById("loginBtn");
+    loginBtn.addEventListener('click',(e)=>{
         e.preventDefault()
-        var email=document.getElementById("email");
-        var password=document.getElementById("password");
+        
         createUserWithEmailAndPassword(auth,email,password)
         .then((cred)=>{
             console.log('user created:',cred.user)

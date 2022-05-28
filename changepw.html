@@ -25,11 +25,48 @@
 </body>
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"; import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"; const firebaseConfig = { apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
     authDomain: "database2022-311c8.firebaseapp.com", projectId: "database2022-311c8", storageBucket: "database2022-311c8.appspot.com", messagingSenderId: "15999843002", appId: "1:15999843002:web:31a94923044c50113ee083", measurementId: "G-8HL90VJ2K7"
     }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app);
+    var email = document.getElementById("email");
+    var password = document.getElementById("password");
+    var submitBtn = document.getElementById("submit-btn");
+    submitBtn.addEventListener("click", function(e)
+    {
+        e.preventDefault();
+        firebase.auth().signInWithEmailAndPassword(email.value,pass.value)
+        .then(()=>{
+                var user = firebase.auth().CurrentUser;
+                if(user){
+                    console.log(user);
+                }
+        })
+        .catch((error)=>{
+            console.log(error.message);
+        })
+    });
 </script>
-<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
-
+<!--
+<script>
+    var email = document.getElementById("email");
+    var password = document.getElementById("password");
+    var submitBtn = document.getElementById("submit-btn");
+    submitBtn.addEventListener("click", function(e)
+    {
+        e.preventDefault();
+        firebase.auth().signInWithEmailAndPassword(email.value,pass.value)
+        .then(()=>{
+                var user = firebase.auth().CurrentUser;
+                if(user){
+                    console.log(user);
+                }
+        })
+        .catch((error)=>{
+            console.log(error.message);
+        })
+    });
+</script>
+-->
 </html>    

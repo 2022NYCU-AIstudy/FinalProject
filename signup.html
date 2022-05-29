@@ -23,11 +23,12 @@
     </div>
 
 </body>
+<!--
 <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"; import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js"; import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"; const firebaseConfig = { apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"; import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js"; import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"; import { getDatabase, ref, child, push, update } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";const firebaseConfig = { apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
     authDomain: "database2022-311c8.firebaseapp.com", projectId: "database2022-311c8", storageBucket: "database2022-311c8.appspot.com", messagingSenderId: "15999843002", appId: "1:15999843002:web:31a94923044c50113ee083", measurementId: "G-8HL90VJ2K7"
-    }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app); const auth = getAuth(app); const db = firebase.database();
+    }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app); const auth = getAuth(app); 
 
 
     loginBtn.addEventListener('click',(e)=>{
@@ -37,10 +38,6 @@
         var loginBtn=document.getElementById("loginBtn");
         createUserWithEmailAndPassword(auth,email,password)
         .then((cred)=>{
-           db.ref(cred.uid).update({
-               email:email,
-               password:password
-           })
             console.log(cred)
         })
         .catch(function(error){
@@ -48,14 +45,41 @@
         })
     })
 </script>
-
+-->
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
 <script>
-    /*
-    firebase.initializeApp({
-        databaseURL: "https://database2022-311c8-default-rtdb.firebaseio.com/"
-    });
-    const database = firebase.database(); 
-    */
+    var firebaseConfig = 
+    {
+        apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
+        authDomain: "database2022-311c8.firebaseapp.com",
+        databaseURL: "https://database2022-311c8-default-rtdb.firebaseio.com",
+        projectId: "database2022-311c8",
+        storageBucket: "database2022-311c8.appspot.com",
+        messagingSenderId: "15999843002",
+        appId: "1:15999843002:web:31a94923044c50113ee083"
+    };
+    firebase.initializeApp(firebaseConfig); 
+    const database = firebase.database();
+    loginBtn.addEventListener('click',(e)=>{
+        e.preventDefault()
+        var email=document.getElementById("email").value;
+        var password=document.getElementById("password").value;
+        var loginBtn=document.getElementById("loginBtn");
+        firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(u => {
+            database.ref(u.uid).update({
+                email: email
+            }) 
+            console.log(u)
+        })
+        .catch(function(error){
+            console.log(error.message)
+        })
+});
 </script>
 
 </html>

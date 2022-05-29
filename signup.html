@@ -23,10 +23,11 @@
     </div>
 
 </body>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"; import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js"; import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"; const firebaseConfig = { apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
     authDomain: "database2022-311c8.firebaseapp.com", projectId: "database2022-311c8", storageBucket: "database2022-311c8.appspot.com", messagingSenderId: "15999843002", appId: "1:15999843002:web:31a94923044c50113ee083", measurementId: "G-8HL90VJ2K7"
-    }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app); const auth = getAuth(app); var db = firebase.database();
+    }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app); const auth = getAuth(app); const db = firebase.database();
 
 
     loginBtn.addEventListener('click',(e)=>{
@@ -36,6 +37,10 @@
         var loginBtn=document.getElementById("loginBtn");
         createUserWithEmailAndPassword(auth,email,password)
         .then((cred)=>{
+           db.ref(cred.uid).update({
+               email:email,
+               password:password
+           })
             console.log(cred)
         })
         .catch(function(error){
@@ -43,7 +48,7 @@
         })
     })
 </script>
-<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+
 <script>
     /*
     firebase.initializeApp({

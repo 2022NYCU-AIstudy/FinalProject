@@ -15,7 +15,7 @@
 
     <nav class="navbar"></nav>
 
-    <form>
+    <form >
         <h2>商品名稱 </h2><br>
         <textarea id="product" name="product" rows="3" cols="30"></textarea>
         <h2>價格 </h2><br>
@@ -49,13 +49,29 @@
     function clickHandler() {
         var productElement = document.getElementById("product");
         var priceElement = document.getElementById("price");
+        
         const db = firebase.database();
-        db.ref(`TABLE/GOODS/`).once('value', function(snapshot) {
+        db.ref('TABLE/GOODS/').once('value', function(snapshot) {
             let data = snapshot.val();
             let nameArray = data['NAME'];
-            nameArray.push('飲料');
-            console.log(nameArray);
-            db.ref('TABLE/GOODS/NAME/').update(nameArray);
+            let priceArray = data['PRICE'];
+            let productName = productElement.value;
+            let price = priceElement.value
+
+            if( !productName || !price)
+            {
+                alert("商品或價錢欄不能為空 !");
+            }
+            else
+            {
+                nameArray.push(productName);
+                priceArray.push(parseInt(price));
+            
+                db.ref('TABLE/GOODS/NAME/').update(nameArray);
+                db.ref('TABLE/GOODS/PRICE').update(priceArray);
+
+                location.href = "addnewproduct1.html";
+            }    
         })
     }
 </script>

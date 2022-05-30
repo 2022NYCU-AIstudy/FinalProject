@@ -51,26 +51,34 @@
     function clickHandler() {
         var productElement = document.getElementById("product");
         var priceElement = document.getElementById("price");
+        var amountElement = document.getElementById("amount");
         
         const db = firebase.database();
         db.ref('TABLE/GOODS/').once('value', function(snapshot) {
             let data = snapshot.val();
             let nameArray = data['NAME'];
             let priceArray = data['PRICE'];
+            let amountArray = data['NUM'];
+
             let productName = productElement.value;
             let price = priceElement.value
+            let amount = amountElement.value;
 
-            if( !productName || !price)
+            if( !productName || !price || !amount)
             {
-                alert("商品或價錢欄不能為空 !");
+                alert("商品或價錢欄或數量不得為空 !");
             }
             else
             {
                 nameArray.push(productName);
                 priceArray.push(parseInt(price));
+                amountArray.push(parseInt(amount));
             
                 db.ref('TABLE/GOODS/NAME/').update(nameArray);
                 db.ref('TABLE/GOODS/PRICE').update(priceArray);
+                db.ref('TABLE/GOODS/NUM').update(amountArray);
+
+                alert('新增成功');
 
                 location.href = "addnewproduct1.html";
             }    

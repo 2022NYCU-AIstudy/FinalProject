@@ -41,6 +41,7 @@
     const database = firebase.database();
     loginBtn.addEventListener('click',(e)=>{
         e.preventDefault()
+        UID=1;
         var email=document.getElementById("email").value;
         var password=document.getElementById("password").value;
         var name=document.getElementById("name").value;
@@ -50,10 +51,9 @@
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(u => {
-            database.ref(u.uid).update({
-                email: email
-            }) 
-            console.log(u)
+            database.ref('TABLE/USER/ID').update({
+                3:u.id
+            })
         })
         .catch(function(error){
             console.log(error.message)

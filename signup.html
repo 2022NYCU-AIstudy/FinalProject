@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
 
     <link rel="stylesheet" href="css/signup.css">
 </head>
+
 <body>
 
     <div class="container">
@@ -16,7 +18,6 @@
             <input type="text" autocomplete="off" id="name" placeholder="name">
             <input type="email" autocomplete="off" name="email" id="email" placeholder="email">
             <input type="password" autocomplete="off" name="password" id="password" placeholder="password">
-            <input type="text" autocomplete="off" id="number" placeholder="phone number">      
             <button class="submit-btn" id="loginBtn">create account</button>
         </div>
         <a href="login.html" class="link">already have an account? Login here</a>
@@ -27,8 +28,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-database.js"></script>
 <script>
-    var firebaseConfig = 
-    {
+    var firebaseConfig = {
         apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
         authDomain: "database2022-311c8.firebaseapp.com",
         databaseURL: "https://database2022-311c8-default-rtdb.firebaseio.com",
@@ -37,28 +37,44 @@
         messagingSenderId: "15999843002",
         appId: "1:15999843002:web:31a94923044c50113ee083"
     };
-    firebase.initializeApp(firebaseConfig); 
-    const database = firebase.database();
-    loginBtn.addEventListener('click',(e)=>{
-        e.preventDefault()
-        UID=1;
-        var email=document.getElementById("email").value;
-        var password=document.getElementById("password").value;
-        var name=document.getElementById("name").value;
-        var phone=document.getElementById("number").value;
-        var loginBtn=document.getElementById("loginBtn");
-        firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(u => {
-            database.ref('TABLE/USER/ID').update({
-                3:u.id
-            })
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    loginBtn.addEventListener('click', (e) => {
+        db.ref('TABLE/USER/').once('value', function(snapshot) {
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+
+            let data = snapshot.val();
+            let IDArray = data['ID'];
+            let MAILArray = data['MAIL'];
+            let NAMEArray = data['NAME'];
+            let PWArray = data['PW'];
+
+            let nameVal = name.value;
+            let emailVal = email.value
+            let passwordVal = password.value;
+
+            if (!name || !email || !password) {
+                alert("欄位不得為空 !");
+            } else {
+                IDArray.push(data['ID'][IDArray.length - 1] + 1);
+                MAILArray.push(emailVal);
+                NAMEArray.push(nameVal);
+                PWArray.push(passwordVal);
+
+                db.ref('TABLE/USER/ID').update(IDArray);
+                db.ref('TABLE/USER/MAIL').update(MAILArray);
+                db.ref('TABLE/USER/NAME').update(NAMEArray);
+                db.ref('TABLE/USER/PW').update(PWArray);
+
+                alert('新增成功');
+
+                location.href = "login.html";
+            }
         })
-        .catch(function(error){
-            console.log(error.message)
-        })
-});
+    });
 </script>
+sky@gmail.com
 
 </html>

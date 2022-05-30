@@ -37,7 +37,7 @@ const actionBtn = document.querySelector('#user-btn');
 
 userImageButton.addEventListener('click', () => {
     userPopup.classList.toggle('hide');
-})
+}) //顯示
 
 window.onload = () => {
     let user = JSON.parse(sessionStorage.user || null);

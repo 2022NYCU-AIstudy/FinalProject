@@ -34,10 +34,10 @@
         var loginBtn=document.getElementById("loginBtn");
         signInWithEmailAndPassword(auth,email,password)
         .then((cred)=>{
-            console.log(cred)
+            location.href = "index.html"
         })
         .catch(function(error){
-            console.log(error.message)
+            alert("密碼錯誤或無此帳號");
         })
     })
 </script>

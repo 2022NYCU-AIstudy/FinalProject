@@ -16,7 +16,7 @@ const createNav = () => {
                         <button class="btn" id="user-btn">Log out</button>
                     </div>
                 </a>
-                <a href="mycart.html"><img src="src/cart.png" alt=""></a>
+                <a class="link" href="mycart.html"><img src="src/cart.png" alt=""></a>
             </div>
         </div>
         <ul class="links-container">
@@ -36,17 +36,22 @@ const popuptext = document.querySelector('.account-info');
 const actionBtn = document.querySelector('#user-btn');
 
 userImageButton.addEventListener('click', () => {
-    userPopup.classList.toggle('hide');
-}) //顯示
+        userPopup.classList.toggle('hide');
+    }) //顯示
 
 window.onload = () => {
-    let user = JSON.parse(sessionStorage.user || null);
-    if (user != null) { //user in login status
-        popuptext.innerHTML = `log in as, ${user.name}`;
+    let getUrlString = location.href;
+    let url = new URL(getUrlString)
+    if (url.searchParams.get('login') === 'true') { //user in login status
+        popuptext.innerHTML = `log in as, ${url.searchParams.get('name')}`;
         actionBtn.innerHTML = 'log out';
+        link = document.getElementsByClassName('link')
+        Array.from(link).forEach(function(link) {
+            link.href += `?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;
+        });
+
         actionBtn.addEventListener('click', () => {
-            sessionStorage.clear();
-            location.reload();
+            location.href = 'index.html';
         })
     } else { //user not login in
         popuptext.innerHTML = 'login to order';

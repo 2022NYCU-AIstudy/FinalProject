@@ -41,7 +41,7 @@ userImageButton.addEventListener('click', () => {
 
 window.onload = () => {
     let getUrlString = location.href;
-    let url = new URL(getUrlString)
+    let url = new URL(getUrlString);
     if (url.searchParams.get('login') === 'true') { //user in login status
         popuptext.innerHTML = `log in as, ${url.searchParams.get('name')}`;
         actionBtn.innerHTML = 'log out';

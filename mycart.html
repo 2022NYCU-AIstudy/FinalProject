@@ -63,23 +63,25 @@
     let getUrlString = location.href;
     let url = new URL(getUrlString);
     if (url.searchParams.get('login') === 'true') {
-        UID = url.searchParams.get('id')
-        db.ref(`TABLE/CART/UID/${UID}`).once('value', function(snapshot) {
+        UID = parseInt(url.searchParams.get('id')) - 1;
+        db.ref(`TABLE/CART`).once('value', function(snapshot) {
             let data = snapshot.val();
-            for (let i = 0; i < data['GID'].length; i++) {
+            for (let i = 0; i < data[UID]['GID'].length; i++) {
                 db.ref(`TABLE/GOODS`).once('value', function(snapshot2) {
                     let data2 = snapshot2.val();
-                    let index = data2['ID'].indexOf(data['GID'][i]);
+                    let index = data2['ID'].indexOf(data[UID]['GID'][i]);
                     name = data2['NAME'][index];
                     price = data2['PRICE'][index];
-                    total += data['NUM'][i] * price;
-                    cartTable.innerHTML += `
+                    if (data[UID]['NUM'][i] > 0) {
+                        total += data[UID]['NUM'][i] * price;
+                        cartTable.innerHTML += `
                 <tr>
                     <th>${name}</th>
-                    <th>${data['NUM'][i]}</th>
-                    <th>${data['NUM'][i]*price}</th>
+                    <th>${data[UID]['NUM'][i]}</th>
+                    <th>${data[UID]['NUM'][i]*price}</th>
                 </tr>`
-                    totalPrice.innerText = `總金額: $ ${total}`;
+                        totalPrice.innerText = `總金額: $ ${total}`;
+                    }
                 });
 
             }

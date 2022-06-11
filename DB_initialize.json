@@ -1,20 +1,36 @@
 {
     "TABLE": {
-        "CART": {
-            "UID": [
-                null,
-                {
-                    "GID": [
-                        1,
-                        2
-                    ],
-                    "NUM": [
-                        1,
-                        5
-                    ]
-                }
-            ]
-        },
+        "CART": [{
+                "GID": [
+                    1,
+                    2
+                ],
+                "NUM": [
+                    1,
+                    5
+                ]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            }
+        ],
         "GOODS": {
             "ID": [
                 1,
@@ -41,39 +57,69 @@
                 "食品"
             ]
         },
-        "HISTORY": {
-            "UID": [
-                null,
-                {
-                    "GID": [
-                        1
-                    ],
-                    "NUM": [
-                        1
-                    ]
-                }
-            ]
-        },
+        "HISTORY": [{
+                "GID": [
+                    1,
+                    2
+                ],
+                "NUM": [
+                    1,
+                    5
+                ]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            },
+            {
+                "GID": [0],
+                "NUM": [0]
+            }
+        ],
         "USER": {
             "ID": [
                 1,
                 2,
-                3
+                3,
+                4,
+                5,
+                6
             ],
             "MAIL": [
                 "test1@gmail.com",
                 "test2@gmail.com",
-                "test3@gmail.com"
+                "test3@gmail.com",
+                "sky@gmail.com",
+                "Leo@gmail.com",
+                "abc@gmail.com"
             ],
             "NAME": [
                 "test1",
                 "test2",
-                "test3"
+                "test3",
+                "sky",
+                "Leo",
+                "abc"
             ],
             "PW": [
                 "123456",
                 "123456",
-                "123456"
+                "123456",
+                "skywer",
+                "zxcasdffqwe",
+                "123456789"
             ]
         }
     }

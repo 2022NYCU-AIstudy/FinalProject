@@ -67,16 +67,36 @@
                 db.ref('TABLE/USER/MAIL').update(MAILArray);
                 db.ref('TABLE/USER/NAME').update(NAMEArray);
                 db.ref('TABLE/USER/PW').update(PWArray);
-                alert('新增成功');
-                firebase
-                .auth()
-                .createUserWithEmailAndPassword(emailVal, passwordVal)
-                .then(result => {
-                    console.log(result)
-                }).catch(function(error) {
-                    console.log(error.message)
+                db.ref('TABLE/CART').once('value', function(snapshot2) {
+                    let data2 = snapshot2.val();
+                    db.ref('TABLE/HISTORY').once('value', function(snapshot3) {
+                        let data3 = snapshot3.val();
+                        data2.push({
+                            "GID": [0],
+                            "NUM": [0]
+                        });
+                        data3.push({
+                            "GID": [0],
+                            "NUM": [0]
+                        });
+                        db.ref('TABLE/CART').update(data2);
+                        db.ref('TABLE/HISTORY').update(data3);
+                        alert('新增成功');
+                        location.href = "login.html";
+
+                    });
+
                 });
-                location.href = "login.html";
+
+                firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(emailVal, passwordVal)
+                    .then(result => {
+                        console.log(result)
+                    }).catch(function(error) {
+                        console.log(error.message)
+                    });
+
             }
         })
     });

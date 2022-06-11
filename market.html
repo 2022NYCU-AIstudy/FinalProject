@@ -45,7 +45,7 @@
         databaseURL: "https://database2022-311c8-default-rtdb.firebaseio.com/"
     });
     const db = firebase.database();
-    db.ref(`TABLE/GOODS`).once('value', function(snapshot) {
+    db.ref('TABLE/GOODS').once('value', function(snapshot) {
         let data = snapshot.val();
         let id = data['ID'];
         let name = data['NAME'];
@@ -55,7 +55,7 @@
         let type = data['TYPE'];
         for (let i = 0; i < id.length; i++) {
             if (num[i] > 0) {
-                db.ref(`TABLE/USER/NAME`).once('value', function(snapshot2) {
+                db.ref('TABLE/USER/NAME').once('value', function(snapshot2) {
                     let data2 = snapshot2.val();
                     marketTable.innerHTML += `
                 <tr>
@@ -63,7 +63,7 @@
                     <th>${num[i]}</th>
                     <th>${price[i]}</th>
                     <th>${data2[i]}</th>
-                    <th><button class="submitBtn" value="${i}" type="submit"><b>購買</b></button></th>
+                    <th><button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button></th>
                 </tr>`
                 });
             }
@@ -71,19 +71,32 @@
         }
 
     });
-    let submitBtn = document.getElementByClassName('submitBtn');
-    Array.from(submitBtn).forEach(function(submitBtn) {
-        submitBtn.addEventListener('click', function() {
-            if (url.searchParams.get('login') === 'true') {
-                db.ref('TABLE/CART').once('value', function(snapshot) {
 
-                });
-            } else {
-                location.href = 'login.html';
-            }
+    function btnClick(gid) {
+        let getUrlString = location.href;
+        let url = new URL(getUrlString);
+        if (url.searchParams.get('login') === 'true') {
+            db.ref('TABLE/CART').once('value', function(snapshot) {
+                let data = snapshot.val();
+                id = parseInt(url.searchParams.get('id')) - 1;
+                if (data[id]['GID'].indexOf(gid) === -1) {
+                    data[id]['GID'].push(gid);
+                    data[id]['NUM'].push(1);
+                } else {
+                    data[id]['NUM'][data[id]['GID'].indexOf(gid)] += 1;
+                }
+                db.ref('TABLE/CART').update(data);
+            });
+            db.ref('TABLE/GOODS').once('value', function(snapshot) {
+                let data = snapshot.val();
+                data['NUM'][gid - 1] -= 1;
+                db.ref('TABLE/GOODS').update(data);
+            });
+        } else {
+            location.href = 'login.html';
+        }
 
-        });
-    });
+    }
 </script>
 
 </html>

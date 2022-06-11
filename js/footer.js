@@ -7,11 +7,11 @@ const createFooter = () =>{
             <div class="footer-ul-container">
                 <ul class="category">
                     <li class="category-title">關於</li>
-                    <li><a href="#" class="footer-link">關於我們</a></li>
+                    <li><a href="aboutus.html" class="footer-link">關於我們</a></li>
                 </ul>
                 <ul class="category">
                     <li class="category-title">二手好物</li>
-                    <li><a href="#" class="footer-link">拍賣區</a></li>
+                    <li><a href="market.html" class="footer-link">拍賣區</a></li>
                 </ul>
                 <ul class="category">
                     <li class="category-title">心情分享</li>

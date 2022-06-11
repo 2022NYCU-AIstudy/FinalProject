@@ -54,34 +54,40 @@
         databaseURL: "https://database2022-311c8-default-rtdb.firebaseio.com/"
     });
     const db = firebase.database();
-    UID = 1;
     let cartTable = document.getElementById('cartTable');
     let totalPrice = document.getElementById('totalPrice');
     let buyBtn = document.getElementById('buyBtn');
     let name;
     let price;
     let total = 0;
-    db.ref(`TABLE/CART/UID/${UID}`).once('value', function(snapshot) {
-        let data = snapshot.val();
-        for (let i = 0; i < data['GID'].length; i++) {
-            db.ref(`TABLE/GOODS`).once('value', function(snapshot2) {
-                let data2 = snapshot2.val();
-                let index = data2['ID'].indexOf(data['GID'][i]);
-                name = data2['NAME'][index];
-                price = data2['PRICE'][index];
-                total += data['NUM'][i] * price;
-                cartTable.innerHTML += `
+    let getUrlString = location.href;
+    let url = new URL(getUrlString);
+    if (url.searchParams.get('login') === 'true') {
+        UID = url.searchParams.get('id')
+        db.ref(`TABLE/CART/UID/${UID}`).once('value', function(snapshot) {
+            let data = snapshot.val();
+            for (let i = 0; i < data['GID'].length; i++) {
+                db.ref(`TABLE/GOODS`).once('value', function(snapshot2) {
+                    let data2 = snapshot2.val();
+                    let index = data2['ID'].indexOf(data['GID'][i]);
+                    name = data2['NAME'][index];
+                    price = data2['PRICE'][index];
+                    total += data['NUM'][i] * price;
+                    cartTable.innerHTML += `
                 <tr>
                     <th>${name}</th>
                     <th>${data['NUM'][i]}</th>
                     <th>${data['NUM'][i]*price}</th>
                 </tr>`
-                totalPrice.innerText = `總金額: $ ${total}`;
-            });
+                    totalPrice.innerText = `總金額: $ ${total}`;
+                });
 
-        }
+            }
 
-    });
+        });
+    } else {
+        location.href = 'login.html';
+    }
 </script>
 
 </html>

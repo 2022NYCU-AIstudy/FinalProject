@@ -16,29 +16,16 @@
     <nav class="navbar"></nav>
 
     <!-- 以下為商品 -->
-    <div>
-        <form id="form" class="" method="get" action="addnewproduct1.html">
-            <div style="display: inline-block;">
-                <button id="addBtn" class="form-control" name="item" value="add" type="submit"><b>新增商品</b></button>
-            </div>
-        </form>
-        <form id="form" class="" method="get" action="mycart.html">
-            <div style="display: inline-block;">
-                <h1 class="">test1</h1>
-                <button id="submitBtn1" class="submitBtn" name="item" value="test1" type="submit"><b>購買</b></button>
-            </div>
+    <table id="marketTable" border="1px">
+        <tr>
+            <th>商品</th>
+            <th>數量</th>
+            <th>價格</th>
+            <th>賣家</th>
+            <th></th>
+        </tr>
 
-            <div style="display: inline-block;">
-                <h1 class="">test2</h1>
-                <button id="submitBtn2" class="submitBtn" name="item" value="test2" type="submit"><b>購買</b></button>
-            </div>
-
-            <div style="display: inline-block;">
-                <h1 class="">test3</h1>
-                <button id="submitBtn3" class="submitBtn" name="item" value="test3" type="submit"><b>購買</b></button>
-            </div>
-        </form>
-    </div>
+    </table>
 
     <footer></footer>
 
@@ -58,13 +45,45 @@
         databaseURL: "https://database2022-311c8-default-rtdb.firebaseio.com/"
     });
     const db = firebase.database();
+    db.ref(`TABLE/GOODS`).once('value', function(snapshot) {
+        let data = snapshot.val();
+        let id = data['ID'];
+        let name = data['NAME'];
+        let num = data['NUM'];
+        let price = data['PRICE'];
+        let sid = data['SELLER_ID'];
+        let type = data['TYPE'];
+        for (let i = 0; i < id.length; i++) {
+            if (num[i] > 0) {
+                db.ref(`TABLE/USER/NAME`).once('value', function(snapshot2) {
+                    let data2 = snapshot2.val();
+                    marketTable.innerHTML += `
+                <tr>
+                    <th>${name[i]}</th>
+                    <th>${num[i]}</th>
+                    <th>${price[i]}</th>
+                    <th>${data2[i]}</th>
+                    <th><button class="submitBtn" value="${i}" type="submit"><b>購買</b></button></th>
+                </tr>`
+                });
+            }
 
-    let btn = document.getElementById('submitBtn1');
-    btn.addEventListener('click', function() {
-        //database.ref('/').set({
-        //test: "tests1"
-        //});
-    })
+        }
+
+    });
+    let submitBtn = document.getElementByClassName('submitBtn');
+    Array.from(submitBtn).forEach(function(submitBtn) {
+        submitBtn.addEventListener('click', function() {
+            if (url.searchParams.get('login') === 'true') {
+                db.ref('TABLE/CART').once('value', function(snapshot) {
+
+                });
+            } else {
+                location.href = 'login.html';
+            }
+
+        });
+    });
 </script>
 
 </html>

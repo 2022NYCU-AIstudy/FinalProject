@@ -1,3 +1,6 @@
+let getUrlString = location.href;
+let url = new URL(getUrlString);
+
 const createNav = () => {
     let nav = document.querySelector('.navbar');
 
@@ -6,8 +9,8 @@ const createNav = () => {
             <img src="src/light-logo.png" class="brand-logo" alt=""> <!-- logo -->
             <div class="nav-items">
                 <div class="search"> <!-- search box -->
-                    <input type="text" class="search-box">
-                    <button class="search-btn">搜尋</button>
+                    <input class="search-box" type="text">
+                    <button class="search-btn" onclick="search()">搜尋</button>
                 </div>
                 <a>
                     <img src="src/user.png" id="user-img" alt="">
@@ -39,9 +42,17 @@ userImageButton.addEventListener('click', () => {
         userPopup.classList.toggle('hide');
     }) //顯示
 
+function search() {
+    keyword = document.querySelector('.search-box').value;
+    if (url.searchParams.get('login') === 'true') { //user in login status
+        location.href = `market.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}&search=${keyword}`;
+    } else { //user not login in
+        location.href = `market.html?search=${keyword}`;
+    }
+
+}
+
 window.onload = () => {
-    let getUrlString = location.href;
-    let url = new URL(getUrlString);
     if (url.searchParams.get('login') === 'true') { //user in login status
         popuptext.innerHTML = `log in as, ${url.searchParams.get('name')}`;
         actionBtn.innerHTML = 'log out';

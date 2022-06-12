@@ -53,23 +53,38 @@
         let price = data['PRICE'];
         let sid = data['SELLER_ID'];
         let type = data['TYPE'];
-        for (let i = 0; i < id.length; i++) {
-            if (num[i] > 0) {
-                db.ref('TABLE/USER/NAME').once('value', function(snapshot2) {
+        let getUrlString = location.href;
+        let url = new URL(getUrlString);
+        db.ref('TABLE/USER/NAME').once('value', function(snapshot2) {
+            for (let i = 0; i < id.length; i++) {
+                if (num[i] > 0) {
                     let data2 = snapshot2.val();
-                    marketTable.innerHTML += `
-                <tr>
-                    <th>${name[i]}</th>
-                    <th>${num[i]}</th>
-                    <th>${price[i]}</th>
-                    <th>${data2[i]}</th>
-                    <th><button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button></th>
-                </tr>`
-                });
+                    keyword = url.searchParams.get('search')
+                    if (keyword) {
+                        if (name[i].includes(keyword) || type[i].includes(keyword)) {
+                            marketTable.innerHTML += `
+                                <tr>
+                                    <th>${name[i]}</th>
+                                    <th>${num[i]}</th>
+                                    <th>${price[i]}</th>
+                                    <th>${data2[i]}</th>
+                                    <th><button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button></th>
+                                </tr>`
+                        }
+                    } else {
+                        marketTable.innerHTML += `
+                            <tr>
+                                <th>${name[i]}</th>
+                                <th>${num[i]}</th>
+                                <th>${price[i]}</th>
+                                <th>${data2[i]}</th>
+                                <th><button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button></th>
+                            </tr>`
+                    }
+                }
             }
 
-        }
-
+        });
     });
 
     function btnClick(gid) {

@@ -49,7 +49,6 @@ function search() {
     } else { //user not login in
         location.href = `market.html?search=${keyword}`;
     }
-
 }
 
 window.onload = () => {

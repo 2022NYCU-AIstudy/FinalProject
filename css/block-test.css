@@ -100,7 +100,6 @@ img{
     width: calc(100% - 40px);
     height: 3px;
     background: #000;
-    /* background: linear-gradient(to right, #000 0%,#000 20%,#ddd 20%,#fff 100%); */
 }
 
 .action button{

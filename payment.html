@@ -15,8 +15,26 @@
 <body>
 
     <nav class="navbar"></nav>
+    <div id = 'goodInfo'>
+        <div id = 'goodName'>
+            <p>商品名稱</p><br><br><br><br>
+            <p>我是名稱</p>
+        </div>
+        <div id = 'price'>
+            <p>價格</p><br><br><br><br>
+            <p>我是價格</p>
+        </div>
+        <div id = 'number'>
+            <p>數量</p><br><br><br><br>
+            <p>我是數量</p>
+        </div>
+        <div id = 'total'>
+            <p>總金額</p><br><br><br><br>
+            <p>我是總金額</p>
+        </div>
+    </div>
     <div class="container_card_mt-3">
-        <div class="form-group mt-3 mb-3">
+        <div class="form-group_mt-3_mb-3">
             <label class="radio">
             <input type="radio" name='type' value='cash' id="pay-by-cash" checked='checked' > 貨到付款
           </label>
@@ -32,12 +50,13 @@
             <p>運費總金額 :</p><br>
             <p>總付款金額 :</p><br>
         </div>
+        <div class="form-group">
+            <!-- <button type="button" id="card-submmit" class="btn btn-info" onclick="submit()">確認送出</button> -->
+            <p id = 'card-submit' class = 'btn btn-info' onclick = 'submit()'>確認送出</p>
+        </div>
         <div id='cash-form' class="form">
             <div class="text-center">
                 <h3>貨到付款</h3>
-            </div>
-            <div class="form-group">
-                <button type="button" id="cash-submmit" class="btn btn-primary" onclick="submit()">確認送出</button>
             </div>
         </div>
 
@@ -65,15 +84,9 @@
                 </div>
                 <input type="text" class="form-control" id="card-csv" placeholder="輸入末三碼">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <span style="color: #fc3762;" id="card-error"></span>
-            </div>
-            <div class="form-group">
-                <button type="button" id="card-submmit" class="btn btn-info" onclick="submit()">確認送出</button>
-            </div>
-            <div class="form-group">
-                <button type="button" id="resetForm" class="btn btn-warning">重設</button>
-            </div>
+            </div> -->
         </div>
 
         <div id='atm-form' style="display: none;">

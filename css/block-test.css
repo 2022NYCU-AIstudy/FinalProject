@@ -1,7 +1,6 @@
 @import 'nav.css';
 @import 'footer.css';
 
-
 .product-box{
     box-shadow: 0 6px 6px rgba(#000, 0.3);
     transition: 200ms;

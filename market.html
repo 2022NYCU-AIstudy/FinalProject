@@ -56,6 +56,68 @@
                     keyword = url.searchParams.get('search')
                     if (keyword) {
                         if (name[i].includes(keyword) || type[i].includes(keyword)) {
+                            if (Sname === url.searchParams.get('name')) {
+                                cartContainer.innerHTML += `
+                        <div class="product-box">
+                            <div class="seller-name">
+                                <h3>賣家：${Sname}</h3>
+                            </div>
+                            <div class="product-body">
+                                <div class="half">
+                                    <div class="featured-text">
+                                        <h2>商品名稱：${name[i]}</h2>
+                                        <p class="price">價格：<b>${price[i]}</b></p>
+                                    </div>
+                                    <div class="image">
+                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="half">
+                                    <div class="amount">
+                                        <p>數量：<b id="n${i}">${num[i]}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-footer">
+                                <div class="action">
+                                    <button class="submitBtn" onclick="cancelClick(${i});"><b>下架此商品</b></button>
+                                </div>
+                            </div>
+                        </div>`
+                            } else {
+                                cartContainer.innerHTML += `
+                        <div class="product-box">
+                            <div class="seller-name">
+                                <h3>賣家：${Sname}</h3>
+                            </div>
+                            <div class="product-body">
+                                <div class="half">
+                                    <div class="featured-text">
+                                        <h2>商品名稱：${name[i]}</h2>
+                                        <p class="price">價格：<b>${price[i]}</b></p>
+                                    </div>
+                                    <div class="image">
+                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="half">
+                                    <div class="amount">
+                                        <p>數量：<b id="n${i}">${num[i]}</b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-footer">
+                                <div class="action">
+                                    <button class="submitBtn" onclick="buyClick(${i});"><b>購買</b></button>
+                                </div>
+                            </div>
+                        </div>`
+
+                            }
+
+                        }
+                    } else {
+                        if (Sname === url.searchParams.get('name')) {
                             cartContainer.innerHTML += `
                         <div class="product-box">
                             <div class="seller-name">
@@ -65,7 +127,7 @@
                                 <div class="half">
                                     <div class="featured-text">
                                         <h2>商品名稱：${name[i]}</h2>
-                                        <p class="price">價格：${price[i]}</p>
+                                        <p class="price">價格：<b>${price[i]}</b></p>
                                     </div>
                                     <div class="image">
                                         <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
@@ -73,19 +135,18 @@
                                 </div>
                                 <div class="half">
                                     <div class="amount">
-                                        <p>數量：${num[i]}</p>
+                                        <p>數量：<b id="n${i}">${num[i]}</b></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="product-footer">
                                 <div class="action">
-                                    <button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button>
+                                    <button class="submitBtn" onclick="cancelClick(${i});"><b>下架此商品</b></button>
                                 </div>
                             </div>
                         </div>`
-                        }
-                    } else {
-                        cartContainer.innerHTML += `
+                        } else {
+                            cartContainer.innerHTML += `
                         <div class="product-box">
                             <div class="seller-name">
                                 <h3>賣家：${Sname}</h3>
@@ -94,7 +155,7 @@
                                 <div class="half">
                                     <div class="featured-text">
                                         <h2>商品名稱：${name[i]}</h2>
-                                        <p class="price">價格：${price[i]}</p>
+                                        <p class="price">價格：<b>${price[i]}</b></p>
                                     </div>
                                     <div class="image">
                                         <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
@@ -102,16 +163,18 @@
                                 </div>
                                 <div class="half">
                                     <div class="amount">
-                                        <p>數量：${num[i]}</p>
+                                        <p>數量：<b id="n${i}">${num[i]}</b></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="product-footer">
                                 <div class="action">
-                                    <button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button>
+                                    <button class="submitBtn" onclick="buyClick(${i});"><b>購買</b></button>
                                 </div>
                             </div>
                         </div>`
+
+                        }
                     }
                 }
             }
@@ -119,13 +182,13 @@
         });
     });
 
-    function btnClick(gid) {
+    function buyClick(gid) {
         let getUrlString = location.href;
         let url = new URL(getUrlString);
         if (url.searchParams.get('login') === 'true') {
             db.ref('TABLE/CART').once('value', function(snapshot) {
                 let data = snapshot.val();
-                id = parseInt(url.searchParams.get('id')) - 1;
+                id = parseInt(url.searchParams.get('id'));
                 if (data[id]['GID'].indexOf(gid) === -1) {
                     data[id]['GID'].push(gid);
                     data[id]['NUM'].push(1);
@@ -134,14 +197,27 @@
                 }
                 db.ref('TABLE/CART').update(data);
             });
-            db.ref('TABLE/GOODS').once('value', function(snapshot) {
-                let data = snapshot.val();
-                data['NUM'][gid - 1] -= 1;
-                db.ref('TABLE/GOODS').update(data);
-            });
+            alert("已加入購物車!");
+            // db.ref('TABLE/GOODS').once('value', function(snapshot) {
+            //     let data = snapshot.val();
+            //     data['NUM'][gid - 1] -= 1;
+            //     db.ref('TABLE/GOODS').update(data);
+
+            // });
+
         } else {
             location.href = 'login.html';
         }
+
+    }
+
+    function cancelClick(gid) {
+        db.ref('TABLE/GOODS').once('value', function(snapshot) {
+            let data = snapshot.val();
+            data['NUM'][gid] = 0;
+            db.ref('TABLE/GOODS').update(data);
+            location.reload();
+        });
 
     }
 </script>

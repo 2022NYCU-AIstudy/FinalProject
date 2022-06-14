@@ -8,27 +8,27 @@
 
 
     <link rel="stylesheet" href="css/home.css">
-    <link rel = 'stylesheet' href = 'css/payment.css'>
+    <link rel='stylesheet' href='css/payment.css'>
 
 </head>
 
 <body>
 
     <nav class="navbar"></nav>
-    <div id = 'goodInfo'>
-        <div id = 'goodName'>
+    <div id='goodInfo'>
+        <div id='goodName'>
             <p>商品名稱</p><br><br><br><br>
             <p>我是名稱</p>
         </div>
-        <div id = 'price'>
+        <div id='price'>
             <p>價格</p><br><br><br><br>
             <p>我是價格</p>
         </div>
-        <div id = 'number'>
+        <div id='number'>
             <p>數量</p><br><br><br><br>
             <p>我是數量</p>
         </div>
-        <div id = 'total'>
+        <div id='total'>
             <p>總金額</p><br><br><br><br>
             <p>我是總金額</p>
         </div>
@@ -45,14 +45,14 @@
             <input type="radio" name='type' value='atm' id="pay-by-atm"> 銀行轉帳
           </label>
         </div>
-        <div id = 'totalPayment'>
+        <div id='totalPayment'>
             <p>商品總金額 :</p><br>
             <p>運費總金額 :</p><br>
             <p>總付款金額 :</p><br>
         </div>
         <div class="form-group">
             <!-- <button type="button" id="card-submmit" class="btn btn-info" onclick="submit()">確認送出</button> -->
-            <p id = 'card-submit' class = 'btn btn-info' onclick = 'submit()'>確認送出</p>
+            <p id='card-submit' class='btn btn-info' onclick='submit()'>確認送出</p>
         </div>
         <div id='cash-form' class="form">
             <div class="text-center">
@@ -98,7 +98,7 @@
                 <p>XXXXXXXXXXXX</p>
             </div>
         </div>
-        
+
     </div>
     <script>
     </script>
@@ -127,7 +127,7 @@
 
     function submit() {
         if (url.searchParams.get('login') === 'true') {
-            UID = parseInt(url.searchParams.get('id')) - 1;
+            UID = parseInt(url.searchParams.get('id'));
             db.ref(`TABLE/CART`).once('value', function(snapshot) {
                 let data = snapshot.val();
                 let cGID = data[UID]['GID'];
@@ -136,22 +136,29 @@
                     let data2 = snapshot2.val();
                     let hGID = data2[UID]['GID'];
                     let hNUM = data2[UID]['NUM'];
-                    for (let i = 0; i < cGID.length; i++) {
-                        if (hGID.indexOf(cGID[i]) === -1) {
-                            hGID.push(cGID[i]);
-                            hNUM.push(cNUM[i]);
-                        } else {
-                            hNUM[hGID.indexOf(cGID[i])] += cNUM[i];
+                    db.ref(`TABLE/GOODS`).once('value', function(snapshot3) {
+                        let data3 = snapshot3.val();
+                        for (let i = 0; i < cGID.length; i++) {
+                            data3['NUM'][cGID[i]] -= cNUM[i];
+                            if (hGID.indexOf(cGID[i]) === -1) {
+                                hGID.push(cGID[i]);
+                                hNUM.push(cNUM[i]);
+                            } else {
+                                hNUM[hGID.indexOf(cGID[i])] += cNUM[i];
+                            }
                         }
-                    }
-                    data[UID] = {
-                        "GID": [0],
-                        "NUM": [0]
-                    };
-                    data2[UID]['GID'] = hGID;
-                    data2[UID]['NUM'] = hNUM;
-                    db.ref(`TABLE/CART`).update(data);
-                    db.ref(`TABLE/HISTORY`).update(data2);
+                        data[UID] = {
+                            "GID": [0],
+                            "NUM": [0]
+                        };
+                        data2[UID]['GID'] = hGID;
+                        data2[UID]['NUM'] = hNUM;
+                        db.ref(`TABLE/CART`).update(data);
+                        db.ref(`TABLE/HISTORY`).update(data2);
+                        db.ref(`TABLE/GOODS`).update(data3);
+                        alert("已送出!");
+                        location.href = `mycart.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;
+                    });
                 });
             });
         } else {

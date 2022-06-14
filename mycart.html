@@ -20,12 +20,12 @@
     <br>
     <div id="cartContainer">
         <h1>我的購物車</h1>
-        <h2 id="totalPrice">總金額: $
+        <h2>總金額: $<b id="totalPrice">0</b>
         </h2>
     </div>
     <p>
         <br>
-        <button id="buyBtn" onclick="location.href = `payment.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;" >購買</button>
+        <button id="buyBtn" onclick="location.href = `payment.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;">購買</button>
     </p>
     <div id="historyContainer">
         <h1>歷史紀錄</h1>
@@ -61,13 +61,12 @@
     let buyBtn = document.getElementById('buyBtn');
     let name;
     let price;
-    let total = 0;
 
     function back() {
         location.href = `./index.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;
     }
     if (url.searchParams.get('login') === 'true') {
-        UID = parseInt(url.searchParams.get('id')) - 1;
+        UID = parseInt(url.searchParams.get('id'));
 
         db.ref(`TABLE/CART`).once('value', function(snapshot) {
             let data = snapshot.val();
@@ -79,10 +78,11 @@
                         let name = data2['NAME'][index];
                         let price = data2['PRICE'][index];
                         let sid = data2['SELLER_ID'][index];
+                        let total = parseInt(totalPrice.innerText);
+                        total += data[UID]['NUM'][i] * price;
+                        totalPrice.innerText = `${total}`;
                         db.ref('TABLE/USER/NAME').once('value', function(snapshot3) {
                             let data3 = snapshot3.val();
-                            total += data[UID]['NUM'][i] * price;
-                            totalPrice.innerText = `總金額: $ ${total}`;
                             cartContainer.innerHTML += `
                         <div class="product-box">
                             <div class="seller-name">
@@ -106,7 +106,7 @@
                             </div>
                             <div class="product-footer">
                                 <div class="action">
-                                    <button type="button">刪除</button>
+                                    <button type="button" onclick="deleteCart(${data[UID]['GID'][i]})">刪除</button>
                                 </div>
                             </div>
                         </div>`
@@ -164,6 +164,17 @@
         })
     } else {
         location.href = 'login.html';
+    }
+
+    function deleteCart(id) {
+        UID = parseInt(url.searchParams.get('id'));
+        db.ref(`TABLE/CART`).once('value', function(snapshot) {
+            let data = snapshot.val();
+            let index = data[UID]['GID'].indexOf(id);
+            data[UID]['NUM'][index] = 0;
+            db.ref(`TABLE/CART`).update(data);
+            location.reload();
+        });
     }
 </script>
 

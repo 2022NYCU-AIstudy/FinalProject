@@ -18,25 +18,7 @@ $('input[type=radio][name="type"]').on('change', function() {
   }      
 })
 
-$('#cash-submmit').on('click', function(event) {
-  event.preventDefault()
-  
-  let cardNo = $("#domestic-card-no").val()
-  let cardMonth = $("#domestic-card-month").val()
-  let cardYear = $("#domestic-card-year").val()
-  let cardCSV = $("#domestic-card-csv").val()
-  
-  let errors = validateForm(cardNo, cardMonth, cardYear, cardCSV)
-  if(errors.length) {
-    $("#domestic-card-error").text(errors.join(','))
-    return
-  }
-  
-  blockForm('cash', true)
-  
-  // ajax event
-  // submitForm(cardNo, cardMonth, cardYear, cardCSV)
-})
+
 
 $('#card-submmit').on('click', function(event) {
   event.preventDefault()

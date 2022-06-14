@@ -8,14 +8,33 @@
 
 
     <link rel="stylesheet" href="css/home.css">
+    <link rel='stylesheet' href='css/payment.css'>
 
 </head>
 
 <body>
 
     <nav class="navbar"></nav>
-    <div class="container card mt-3">
-        <div class="form-group mt-3 mb-3">
+    <div id='goodInfo'>
+        <div id='goodName'>
+            <p>商品名稱</p><br><br><br><br>
+            <p>我是名稱</p>
+        </div>
+        <div id='price'>
+            <p>價格</p><br><br><br><br>
+            <p>我是價格</p>
+        </div>
+        <div id='number'>
+            <p>數量</p><br><br><br><br>
+            <p>我是數量</p>
+        </div>
+        <div id='total'>
+            <p>總金額</p><br><br><br><br>
+            <p>我是總金額</p>
+        </div>
+    </div>
+    <div class="container_card_mt-3">
+        <div class="form-group_mt-3_mb-3">
             <label class="radio">
             <input type="radio" name='type' value='cash' id="pay-by-cash" checked='checked' > 貨到付款
           </label>
@@ -26,36 +45,18 @@
             <input type="radio" name='type' value='atm' id="pay-by-atm"> 銀行轉帳
           </label>
         </div>
-
+        <div id='totalPayment'>
+            <p>商品總金額 :</p><br>
+            <p>運費總金額 :</p><br>
+            <p>總付款金額 :</p><br>
+        </div>
+        <div class="form-group">
+            <!-- <button type="button" id="card-submmit" class="btn btn-info" onclick="submit()">確認送出</button> -->
+            <p id='card-submit' class='btn btn-info' onclick='submit()'>確認送出</p>
+        </div>
         <div id='cash-form' class="form">
             <div class="text-center">
                 <h3>貨到付款</h3>
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">國內信用卡卡號</span>
-                </div>
-                <input type="text" class="form-control" id="domestic-card-no">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">月</span>
-                </div>
-                <input type="text" class="form-control" id="domestic-card-month" placeholder="輸入月份">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">年</span>
-                </div>
-                <input type="text" class="form-control" id="domestic-card-year" placeholder="輸入年">
-                <div class="input-group-prepend">
-                    <label class="input-group-text">末三碼</label>
-                </div>
-                <input type="text" class="form-control" id="domestic-card-csv" placeholder="輸入末三碼">
-            </div>
-            <div class="form-group">
-                <span style="color: #fc3762;" id="domestic-card-error"></span>
-            </div>
-            <div class="form-group">
-                <button type="button" id="cash-submmit" class="btn btn-primary" onclick="submit()">確認送出</button>
             </div>
         </div>
 
@@ -83,12 +84,9 @@
                 </div>
                 <input type="text" class="form-control" id="card-csv" placeholder="輸入末三碼">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <span style="color: #fc3762;" id="card-error"></span>
-            </div>
-            <div class="form-group">
-                <button type="button" id="card-submmit" class="btn btn-info" onclick="submit()">確認送出</button>
-            </div>
+            </div> -->
         </div>
 
         <div id='atm-form' style="display: none;">
@@ -100,9 +98,7 @@
                 <p>XXXXXXXXXXXX</p>
             </div>
         </div>
-        <div class="form-group">
-            <button type="button" id="resetForm" class="btn btn-warning">重設</button>
-        </div>
+
     </div>
     <script>
     </script>
@@ -131,7 +127,7 @@
 
     function submit() {
         if (url.searchParams.get('login') === 'true') {
-            UID = parseInt(url.searchParams.get('id')) - 1;
+            UID = parseInt(url.searchParams.get('id'));
             db.ref(`TABLE/CART`).once('value', function(snapshot) {
                 let data = snapshot.val();
                 let cGID = data[UID]['GID'];
@@ -140,22 +136,29 @@
                     let data2 = snapshot2.val();
                     let hGID = data2[UID]['GID'];
                     let hNUM = data2[UID]['NUM'];
-                    for (let i = 0; i < cGID.length; i++) {
-                        if (hGID.indexOf(cGID[i]) === -1) {
-                            hGID.push(cGID[i]);
-                            hNUM.push(cNUM[i]);
-                        } else {
-                            hNUM[hGID.indexOf(cGID[i])] += cNUM[i];
+                    db.ref(`TABLE/GOODS`).once('value', function(snapshot3) {
+                        let data3 = snapshot3.val();
+                        for (let i = 0; i < cGID.length; i++) {
+                            data3['NUM'][cGID[i]] -= cNUM[i];
+                            if (hGID.indexOf(cGID[i]) === -1) {
+                                hGID.push(cGID[i]);
+                                hNUM.push(cNUM[i]);
+                            } else {
+                                hNUM[hGID.indexOf(cGID[i])] += cNUM[i];
+                            }
                         }
-                    }
-                    data[UID] = {
-                        "GID": [0],
-                        "NUM": [0]
-                    };
-                    data2[UID]['GID'] = hGID;
-                    data2[UID]['NUM'] = hNUM;
-                    db.ref(`TABLE/CART`).update(data);
-                    db.ref(`TABLE/HISTORY`).update(data2);
+                        data[UID] = {
+                            "GID": [0],
+                            "NUM": [0]
+                        };
+                        data2[UID]['GID'] = hGID;
+                        data2[UID]['NUM'] = hNUM;
+                        db.ref(`TABLE/CART`).update(data);
+                        db.ref(`TABLE/HISTORY`).update(data2);
+                        db.ref(`TABLE/GOODS`).update(data3);
+                        alert("已送出!");
+                        location.href = `mycart.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;
+                    });
                 });
             });
         } else {

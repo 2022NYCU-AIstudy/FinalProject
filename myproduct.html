@@ -7,6 +7,7 @@
    
 
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/block-test.css">
 
 </head>  
 <body>
@@ -45,6 +46,45 @@
 </table>
  
 <!-- 以下為商品 -->
+
+
+<center><h1>已上架的商品</h1></center>
+    <div class="p3" >
+        <div class="seller-name">
+            <h3>賣家名稱</h3>
+        </div>
+        <div class="product-body">
+            <div class="half">
+                <div class="featured-text">
+                    <h2>商品名稱</h2>
+                    <p class="price">價格</p>
+                </div>
+                <div class="image">
+                    <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                </div>
+            </div>
+            <div class="half">
+                <div class="des">
+                    <p>說明</p>
+                </div>
+                <div class="amount">
+                    <p>數量</p>
+                </div>
+                <br>
+                <div >
+                    <p>上架日期:</p>
+                </div>
+            </div>
+        </div>
+        <div class="product-footer">
+            
+            <div class="action">
+                <button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>下架此商品</b></button>
+            </div>
+        </div>
+    </div>
+
+
 
     <footer></footer>
 

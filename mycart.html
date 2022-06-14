@@ -28,7 +28,7 @@
     <p>
         <h2 id="totalPrice">總金額: $
         </h2>
-        <button id="buyBtn">購買</button>
+        <button id="buyBtn" onclick="location.href = `payment.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;">購買</button>
     </p>
 
 

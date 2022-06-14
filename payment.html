@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+
+    <link rel="stylesheet" href="css/home.css">
+
+</head>  
+<body>
+
+    <nav class="navbar"></nav>
+    <div class="container card mt-3">
+        <div class="form-group mt-3 mb-3">
+          <label class="radio">
+            <input type="radio" name='type' value='cash' id="pay-by-cash" checked='checked' > 貨到付款
+          </label>
+          <label class="radio">
+            <input type="radio" name='type' value='credit' id="pay-by-credit" > 信用卡
+          </label>
+          <label class="radio">
+            <input type="radio" name='type' value='atm' id="pay-by-atm"> 銀行轉帳
+          </label>
+        </div>
+        
+        <div id='cash-form' class="form">
+          <div class="text-center">
+            <h3>貨到付款</h3>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">國內信用卡卡號</span>
+            </div>
+            <input type="text" class="form-control" id="domestic-card-no" >
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">月</span>
+            </div>
+            <input type="text" class="form-control" id="domestic-card-month" placeholder="輸入月份" >
+            <div class="input-group-prepend">
+              <span class="input-group-text">年</span>
+            </div>
+            <input type="text" class="form-control" id="domestic-card-year" placeholder="輸入年" >
+            <div class="input-group-prepend">
+              <label class="input-group-text">末三碼</label>
+            </div>
+            <input type="text" class="form-control" id="domestic-card-csv" placeholder="輸入末三碼" >
+          </div>
+          <div class="form-group">
+            <span style="color: #fc3762;" id="domestic-card-error"></span>
+          </div>
+          <div class="form-group">
+            <button type="button" id="cash-submmit" class="btn btn-primary">確認送出</button>
+          </div>
+        </div>
+          
+        <div id='credit-form' style="display: none;" class="form">
+          <div class="text-center">
+            <h3>信用卡</h3>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">信用卡卡號</span>
+            </div>
+            <input type="text" class="form-control" id="card-no" >
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">月</span>
+            </div>
+            <input type="text" class="form-control" id="card-month" placeholder="輸入月份" >
+            <div class="input-group-prepend">
+              <span class="input-group-text">年</span>
+            </div>
+            <input type="text" class="form-control" id="card-year" placeholder="輸入年" >
+            <div class="input-group-prepend">
+              <label class="input-group-text">末三碼</label>
+            </div>
+            <input type="text" class="form-control" id="card-csv" placeholder="輸入末三碼" >
+          </div>
+          <div class="form-group">
+            <span style="color: #fc3762;" id="card-error"></span>
+          </div>
+          <div class="form-group">
+            <button type="button" id="card-submmit" class="btn btn-info">確認送出</button>
+          </div>
+        </div>
+          
+        <div id='atm-form' style="display: none;">
+          <div class="text-center">
+            <h3>使用ATM轉帳</h3>
+            <p>轉帳資訊，如下</p>
+            <p>XXXXXXXXXXXX</p>
+            <p>XXXXXXXXXXXX</p>
+            <p>XXXXXXXXXXXX</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" id="resetForm" class="btn btn-warning">重設</button>
+        </div>
+        </div>
+    <script>
+     
+    </script>
+<!-- 以下為商品 -->
+
+    <footer></footer>
+
+    <script src="js/nav.js"></script> <!-- dynamic create navbar -->
+    <script src="js/footer.js"></script> <!-- dynamic create footer -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script><script  src="js/card.js"></script>
+</body>  
+</html>

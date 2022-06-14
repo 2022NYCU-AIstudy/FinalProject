@@ -60,8 +60,6 @@
     let name;
     let price;
     let total = 0;
-    let getUrlString = location.href;
-    let url = new URL(getUrlString);
 
     function back() {
         location.href = `./index.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;

@@ -8,6 +8,7 @@
     <title>Clap Market</title>
 
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/block-test.css">
 
 </head>
 
@@ -16,16 +17,7 @@
     <nav class="navbar"></nav>
 
     <!-- 以下為商品 -->
-    <table id="marketTable" border="1px">
-        <tr>
-            <th>商品</th>
-            <th>數量</th>
-            <th>價格</th>
-            <th>賣家</th>
-            <th></th>
-        </tr>
-
-    </table>
+    <div id="cartContainer"></div>
 
     <footer></footer>
 
@@ -46,6 +38,7 @@
     });
     const db = firebase.database();
     db.ref('TABLE/GOODS').once('value', function(snapshot) {
+        let cartContainer = document.getElementById('cartContainer');
         let data = snapshot.val();
         let id = data['ID'];
         let name = data['NAME'];
@@ -56,30 +49,69 @@
         let getUrlString = location.href;
         let url = new URL(getUrlString);
         db.ref('TABLE/USER/NAME').once('value', function(snapshot2) {
-            for (let i = 0; i < id.length; i++) {
+            for (let i = 0; i < sid.length; i++) {
                 if (num[i] > 0) {
                     let data2 = snapshot2.val();
+                    let Sname = data2[sid[i]];
                     keyword = url.searchParams.get('search')
                     if (keyword) {
                         if (name[i].includes(keyword) || type[i].includes(keyword)) {
-                            marketTable.innerHTML += `
-                                <tr>
-                                    <th>${name[i]}</th>
-                                    <th>${num[i]}</th>
-                                    <th>${price[i]}</th>
-                                    <th>${data2[i]}</th>
-                                    <th><button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button></th>
-                                </tr>`
+                            cartContainer.innerHTML += `
+                        <div class="product-box">
+                            <div class="seller-name">
+                                <h3>賣家：${Sname}</h3>
+                            </div>
+                            <div class="product-body">
+                                <div class="half">
+                                    <div class="featured-text">
+                                        <h2>商品名稱：${name[i]}</h2>
+                                        <p class="price">價格：${price[i]}</p>
+                                    </div>
+                                    <div class="image">
+                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="half">
+                                    <div class="amount">
+                                        <p>數量：${num[i]}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-footer">
+                                <div class="action">
+                                    <button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button>
+                                </div>
+                            </div>
+                        </div>`
                         }
                     } else {
-                        marketTable.innerHTML += `
-                            <tr>
-                                <th>${name[i]}</th>
-                                <th>${num[i]}</th>
-                                <th>${price[i]}</th>
-                                <th>${data2[i]}</th>
-                                <th><button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button></th>
-                            </tr>`
+                        cartContainer.innerHTML += `
+                        <div class="product-box">
+                            <div class="seller-name">
+                                <h3>賣家：${Sname}</h3>
+                            </div>
+                            <div class="product-body">
+                                <div class="half">
+                                    <div class="featured-text">
+                                        <h2>商品名稱：${name[i]}</h2>
+                                        <p class="price">價格：${price[i]}</p>
+                                    </div>
+                                    <div class="image">
+                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="half">
+                                    <div class="amount">
+                                        <p>數量：${num[i]}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-footer">
+                                <div class="action">
+                                    <button class="submitBtn" id="${i+1}" onclick="btnClick(${i+1});"><b>購買</b></button>
+                                </div>
+                            </div>
+                        </div>`
                     }
                 }
             }

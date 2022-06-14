@@ -8,28 +8,28 @@
 
 
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/block-test.css">
 
 </head>
 
 <body>
 
     <nav class="navbar"></nav>
-    <h1>我的購物車</h1>
+
     <button onclick="back()">返回首頁</button>
     <br>
-    <table id="cartTable" border="1px">
-        <tr>
-            <th>商品</th>
-            <th>數量</th>
-            <th>價格</th>
-        </tr>
-
-    </table>
-    <p>
+    <div id="cartContainer">
+        <h1>我的購物車</h1>
         <h2 id="totalPrice">總金額: $
         </h2>
+    </div>
+    <p>
         <button id="buyBtn" onclick="location.href = `payment.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;">購買</button>
     </p>
+    <div id="historyContainer">
+        <h1>歷史紀錄</h1>
+    </div>
+
 
 
 
@@ -54,7 +54,8 @@
         databaseURL: "https://database2022-311c8-default-rtdb.firebaseio.com/"
     });
     const db = firebase.database();
-    let cartTable = document.getElementById('cartTable');
+    let cartContainer = document.getElementById('cartContainer');
+    let historyContainer = document.getElementById('historyContainer');
     let totalPrice = document.getElementById('totalPrice');
     let buyBtn = document.getElementById('buyBtn');
     let name;
@@ -66,29 +67,97 @@
     }
     if (url.searchParams.get('login') === 'true') {
         UID = parseInt(url.searchParams.get('id')) - 1;
+
         db.ref(`TABLE/CART`).once('value', function(snapshot) {
             let data = snapshot.val();
             for (let i = 0; i < data[UID]['GID'].length; i++) {
                 db.ref(`TABLE/GOODS`).once('value', function(snapshot2) {
                     let data2 = snapshot2.val();
-                    let index = data2['ID'].indexOf(data[UID]['GID'][i]);
-                    name = data2['NAME'][index];
-                    price = data2['PRICE'][index];
                     if (data[UID]['NUM'][i] > 0) {
-                        total += data[UID]['NUM'][i] * price;
-                        cartTable.innerHTML += `
-                <tr>
-                    <th>${name}</th>
-                    <th>${data[UID]['NUM'][i]}</th>
-                    <th>${data[UID]['NUM'][i]*price}</th>
-                </tr>`
-                        totalPrice.innerText = `總金額: $ ${total}`;
+                        let index = data2['ID'].indexOf(data[UID]['GID'][i]);
+                        let name = data2['NAME'][index];
+                        let price = data2['PRICE'][index];
+                        let sid = data2['SELLER_ID'][index];
+                        db.ref('TABLE/USER/NAME').once('value', function(snapshot3) {
+                            let data3 = snapshot3.val();
+                            total += data[UID]['NUM'][i] * price;
+                            totalPrice.innerText = `總金額: $ ${total}`;
+                            cartContainer.innerHTML += `
+                        <div class="product-box">
+                            <div class="seller-name">
+                                <h3>賣家：${data3[sid]}</h3>
+                            </div>
+                            <div class="product-body">
+                                <div class="half">
+                                    <div class="featured-text">
+                                        <h2>商品名稱：${name}</h2>
+                                        <p class="price">價格：${price}</p>
+                                    </div>
+                                    <div class="image">
+                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="half">
+                                    <div class="amount">
+                                        <p>數量：${data[UID]['NUM'][i]}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-footer">
+                            </div>
+                        </div>`
+
+                        });
                     }
                 });
 
             }
 
         });
+
+        db.ref(`TABLE/HISTORY`).once('value', function(snapshot) {
+            let data = snapshot.val();
+            for (let i = 0; i < data[UID]['GID'].length; i++) {
+                db.ref(`TABLE/GOODS`).once('value', function(snapshot2) {
+                    let data2 = snapshot2.val();
+                    if (data[UID]['NUM'][i] > 0) {
+                        let index = data2['ID'].indexOf(data[UID]['GID'][i]);
+                        let name = data2['NAME'][index];
+                        let price = data2['PRICE'][index];
+                        let sid = data2['SELLER_ID'][index];
+                        db.ref('TABLE/USER/NAME').once('value', function(snapshot3) {
+                            let data3 = snapshot3.val();
+                            historyContainer.innerHTML += `
+                        <div class="product-box">
+                            <div class="seller-name">
+                                <h3>賣家：${data3[sid]}</h3>
+                            </div>
+                            <div class="product-body">
+                                <div class="half">
+                                    <div class="featured-text">
+                                        <h2>商品名稱：${name}</h2>
+                                        <p class="price">價格：${price}</p>
+                                    </div>
+                                    <div class="image">
+                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="half">
+                                    <div class="amount">
+                                        <p>數量：${data[UID]['NUM'][i]}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-footer">
+                            </div>
+                        </div>`
+
+                        });
+                    }
+                });
+
+            }
+        })
     } else {
         location.href = 'login.html';
     }

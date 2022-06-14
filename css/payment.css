@@ -1,0 +1,10 @@
+.container_card_mt-3{
+    position: relative;
+    border:solid 1px red;
+    height : 17em;
+}
+#totalPayment{
+    position: absolute;
+    top : 7em;
+    right : 10em;
+}

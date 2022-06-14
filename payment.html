@@ -8,13 +8,14 @@
 
 
     <link rel="stylesheet" href="css/home.css">
+    <link rel = 'stylesheet' href = 'css/payment.css'>
 
 </head>
 
 <body>
 
     <nav class="navbar"></nav>
-    <div class="container card mt-3">
+    <div class="container_card_mt-3">
         <div class="form-group mt-3 mb-3">
             <label class="radio">
             <input type="radio" name='type' value='cash' id="pay-by-cash" checked='checked' > 貨到付款
@@ -26,7 +27,11 @@
             <input type="radio" name='type' value='atm' id="pay-by-atm"> 銀行轉帳
           </label>
         </div>
-
+        <div id = 'totalPayment'>
+            <p>商品總金額 :</p><br>
+            <p>運費總金額 :</p><br>
+            <p>總付款金額 :</p><br>
+        </div>
         <div id='cash-form' class="form">
             <div class="text-center">
                 <h3>貨到付款</h3>

@@ -1,2 +1,16 @@
 @import 'nav.css';
 @import 'footer.css';
+
+button{
+    border:0;
+    background-color:#003C9D;
+    color:#fff;
+    border-radius:10px;
+    cursor:pointer;
+}
+  
+button:hover{
+    color:#003C9D;
+    background-color:#fff;
+    border:2px #003C9D solid;
+}

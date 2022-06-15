@@ -16,7 +16,7 @@
 
     <nav class="navbar"></nav>
 
-    <button class="btn" onclick="back()">返回首頁</button>
+    <button class="product-btn" onclick="back()">返回首頁</button>
     <br>
     <div id="cartContainer">
         <h1>我的購物車</h1>
@@ -25,7 +25,7 @@
     </div>
     <p>
         <br>
-        <button class="btn" id="buyBtn" onclick="location.href = `payment.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;">購買</button>
+        <button class="product-btn" id="buyBtn" onclick="location.href = `payment.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;">購買</button>
     </p>
     <div id="historyContainer">
         <h1>歷史紀錄</h1>
@@ -132,11 +132,11 @@
                         db.ref('TABLE/USER/NAME').once('value', function(snapshot3) {
                             let data3 = snapshot3.val();
                             historyContainer.innerHTML += `
-                        <div class="p2">
+                        <div class="p2-box">
                             <div class="seller-name">
                                 <h3>賣家：${data3[sid]}</h3>
                             </div>
-                            <div class="p2">
+                            <div class="p2-body">
                                 <div class="half">
                                     <div class="featured-text">
                                         <h2>商品名稱：${name}</h2>

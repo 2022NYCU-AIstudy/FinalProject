@@ -15,28 +15,26 @@
 
     <nav class="navbar"></nav>
 
-    <form >
+    <form>
         <h2>商品名稱 </h2><br>
         <textarea id="product" name="product" rows="3" cols="30"></textarea>
         <h2>數量 </h2><br>
         <textarea id='amount' name="amount" rows="3" cols="30"></textarea>
         <h2>價格 </h2><br>
         <textarea id='price' name="price" rows="3" cols="30"></textarea>
-        <h2>說明 </h2><br>
-        <textarea name="product" rows="30" cols="30"></textarea>
         <h2>商品種類 </h2><br>
-        <fieldset>     
+        <fieldset>
             <div>
                 <input type="radio" id="supply" name="product_type" value="supply" checked>
                 <label for="supply">生活用品</label>
             </div>
-        
+
             <div>
                 <input type="radio" id="food" name="product_type" value="food">
                 <label for="food">食品</label>
             </div>
-        
-        </fieldset>        
+
+        </fieldset>
         <h2><input class="btn" onclick="clickHandler()" value="確認" type="button"></h2>
     </form>
 
@@ -51,19 +49,9 @@
 
 </body>
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"; 
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"; 
-    const firebaseConfig = { 
-        apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
-        authDomain: "database2022-311c8.firebaseapp.com", 
-        projectId: "database2022-311c8", 
-        storageBucket: "database2022-311c8.appspot.com", 
-        messagingSenderId: "15999843002", 
-        appId: "1:15999843002:web:31a94923044c50113ee083", 
-        measurementId: "G-8HL90VJ2K7"
-    }; 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js"; import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js"; const firebaseConfig = { apiKey: "AIzaSyAilIs8nlqbsnXLnIpK3B4zU1ojk7nQU94",
+    authDomain: "database2022-311c8.firebaseapp.com", projectId: "database2022-311c8", storageBucket: "database2022-311c8.appspot.com", messagingSenderId: "15999843002", appId: "1:15999843002:web:31a94923044c50113ee083", measurementId: "G-8HL90VJ2K7"
+    }; const app = initializeApp(firebaseConfig); const analytics = getAnalytics(app);
 </script>
 <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 <script>
@@ -75,36 +63,29 @@
         var productElement = document.getElementById("product");
         var priceElement = document.getElementById("price");
         var amountElement = document.getElementById("amount");
-        
+
         const db = firebase.database();
         db.ref('TABLE/GOODS/').once('value', function(snapshot) {
             let data = snapshot.val();
-            let nameArray = data['NAME'];
-            let priceArray = data['PRICE'];
-            let amountArray = data['NUM'];
-
             let productName = productElement.value;
             let price = priceElement.value
             let amount = amountElement.value;
 
-            if( !productName || !price || !amount)
-            {
+            if (!productName || !price || !amount) {
                 alert("商品或價錢欄或數量不得為空 !");
-            }
-            else
-            {
-                nameArray.push(productName);
-                priceArray.push(parseInt(price));
-                amountArray.push(parseInt(amount));
-            
-                db.ref('TABLE/GOODS/NAME/').update(nameArray);
-                db.ref('TABLE/GOODS/PRICE').update(priceArray);
-                db.ref('TABLE/GOODS/NUM').update(amountArray);
+            } else {
+                data['ID'].push(data['ID'][data['ID'].length - 1] + 1);
+                data['NAME'].push(productName);
+                data['NUM'].push(parseInt(amount));
+                data['PRICE'].push(parseInt(price));
+                data['SELLER_ID'].push(parseInt(url.searchParams.get('id')));
+
+                db.ref('TABLE/GOODS/').update(data);
 
                 alert('新增成功');
 
-                location.href = "addnewproduct1.html";
-            }    
+                location.href = `market.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;
+            }
         })
     }
 </script>

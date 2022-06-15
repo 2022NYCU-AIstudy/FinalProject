@@ -15,7 +15,7 @@
 <body>
 
     <nav class="navbar"></nav>
-
+    <button onclick="addnewproductClick()">上架</button>
     <!-- 以下為商品 -->
     <div id="cartContainer"></div>
 
@@ -219,6 +219,14 @@
             location.reload();
         });
 
+    }
+
+    function addnewproductClick() {
+        if (url.searchParams.get('login') === 'true') {
+            location.href = `addnewproduct1.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;
+        } else {
+            location.href = 'login.html';
+        }
     }
 </script>
 

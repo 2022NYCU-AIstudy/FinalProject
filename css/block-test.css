@@ -16,17 +16,7 @@
     transition: 200ms;
     background: #f8e3f4;
     width: 75%;
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.p3{
-    box-shadow: 0 6px 6px rgba(#000, 0.3);
-    transition: 200ms;
-    background: #faeece;
-    width: 75%;
-    margin-top: 50px;
+    margin-bottom: 50px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -152,4 +142,3 @@
     background: #fff;
     color: #000;
 }
-

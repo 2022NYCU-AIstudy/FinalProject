@@ -16,7 +16,7 @@
 
     <nav class="navbar"></nav>
 
-    <button onclick="back()">返回首頁</button>
+    <button class="btn" onclick="back()">返回首頁</button>
     <br>
     <div id="cartContainer">
         <h1>我的購物車</h1>
@@ -25,7 +25,7 @@
     </div>
     <p>
         <br>
-        <button id="buyBtn" onclick="location.href = `payment.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;">購買</button>
+        <button class="btn" id="buyBtn" onclick="location.href = `payment.html?login=true&id=${url.searchParams.get('id')}&name=${url.searchParams.get('name')}`;">購買</button>
     </p>
     <div id="historyContainer">
         <h1>歷史紀錄</h1>
@@ -94,13 +94,13 @@
                                         <h2>商品名稱：${name}</h2>
                                         <p class="price">價格：${price}</p>
                                     </div>
-                                    <div class="image">
-                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                                    <div class="amount">
+                                        <p>數量：${data[UID]['NUM'][i]}</p>
                                     </div>
                                 </div>
                                 <div class="half">
-                                    <div class="amount">
-                                        <p>數量：${data[UID]['NUM'][i]}</p>
+                                    <div class="image">
+                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -142,13 +142,13 @@
                                         <h2>商品名稱：${name}</h2>
                                         <p class="price">價格：${price}</p>
                                     </div>
-                                    <div class="image">
-                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
+                                    <div class="amount">
+                                        <p>數量：${data[UID]['NUM'][i]}</p>
                                     </div>
                                 </div>
                                 <div class="half">
-                                    <div class="amount">
-                                        <p>數量：${data[UID]['NUM'][i]}</p>
+                                    <div class="image">
+                                        <img src="https://m.media-amazon.com/images/I/91jb08nas1L._AC_SL1500_.jpg" alt="">
                                     </div>
                                 </div>
                             </div>

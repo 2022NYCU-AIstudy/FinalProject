@@ -24,19 +24,20 @@
         <textarea id='price' name="price" rows="3" cols="30"></textarea>
         <h2>說明 </h2><br>
         <textarea name="product" rows="30" cols="30"></textarea>
-        <fieldset>        
+        <h2>商品種類 </h2><br>
+        <fieldset>     
             <div>
-              <input type="radio" id="supply" name="product_type" value="supply" checked>
-              <label for="supply">生活用品</label>
+                <input type="radio" id="supply" name="product_type" value="supply" checked>
+                <label for="supply">生活用品</label>
             </div>
         
             <div>
-              <input type="radio" id="food" name="product_type" value="food">
-              <label for="food">食品</label>
+                <input type="radio" id="food" name="product_type" value="food">
+                <label for="food">食品</label>
             </div>
         
         </fieldset>        
-        <h2><input onclick="clickHandler()" value="確認" type="button"></h2>
+        <h2><input class="btn" onclick="clickHandler()" value="確認" type="button"></h2>
     </form>
 
     <!-- 以下為商品 -->

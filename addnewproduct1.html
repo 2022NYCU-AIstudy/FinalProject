@@ -17,21 +17,26 @@
 
     <form>
         <h2>商品名稱 </h2><br>
-        <textarea id="product" name="product" rows="3" cols="30"></textarea>
+        <textarea id="product" name="product" rows="1" cols="30" placeholder="請輸入商品名稱"></textarea>
         <h2>數量 </h2><br>
-        <textarea id='amount' name="amount" rows="3" cols="30"></textarea>
+        <textarea id='amount' name="amount" rows="1" cols="30" placeholder="請輸入商品數量"></textarea>
         <h2>價格 </h2><br>
-        <textarea id='price' name="price" rows="3" cols="30"></textarea>
+        <textarea id='price' name="price" rows="1" cols="30" placeholder="請輸入商品價格"></textarea>
         <h2>商品種類 </h2><br>
         <fieldset>
             <div>
-                <input type="radio" id="supply" name="product_type" value="supply" checked>
+                <input class="product_type" type="radio" id="supply" name="product_type" value="supply" checked>
                 <label for="supply">生活用品</label>
             </div>
 
             <div>
-                <input type="radio" id="food" name="product_type" value="food">
+                <input class="product_type" type="radio" id="food" name="product_type" value="food">
                 <label for="food">食品</label>
+            </div>
+
+            <div>
+                <input class="product_type" type="radio" id="others" name="product_type" value="others">
+                <label for="others">其他</label>
             </div>
 
         </fieldset>

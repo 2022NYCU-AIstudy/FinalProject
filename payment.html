@@ -15,24 +15,10 @@
 <body>
 
     <nav class="navbar"></nav>
-    <div id='goodInfo'>
-        <div id='goodName'>
-            <p>商品名稱</p><br><br><br><br>
-            <p>我是名稱</p>
-        </div>
-        <div id='price'>
-            <p>價格</p><br><br><br><br>
-            <p>我是價格</p>
-        </div>
-        <div id='number'>
-            <p>數量</p><br><br><br><br>
-            <p>我是數量</p>
-        </div>
-        <div id='total'>
-            <p>總金額</p><br><br><br><br>
-            <p>我是總金額</p>
-        </div>
+    <div id="goodCtn">
     </div>
+
+
     <div class="container_card_mt-3">
         <div class="form-group_mt-3_mb-3">
             <label class="radio">
@@ -46,9 +32,9 @@
           </label>
         </div>
         <div id='totalPayment'>
-            <p>商品總金額 :</p><br>
-            <p>運費總金額 :</p><br>
-            <p>總付款金額 :</p><br>
+            <p>商品總金額 :<b id="goodPrice">0</b></p><br>
+            <p>運費總金額 :<b id="freight">60</b></p><br>
+            <p>總付款金額 :<b id="totalPrice">60</b></p><br>
         </div>
         <div class="form-group">
             <!-- <button type="button" id="card-submmit" class="btn btn-info" onclick="submit()">確認送出</button> -->
@@ -104,7 +90,7 @@
         <div>
             <input type="text" class="form-control" id="address" placeholder="輸入地址">
         </div>
-        
+
     </div>
     <script>
     </script>
@@ -171,6 +157,58 @@
             location.href = 'login.html';
         }
     }
+
+    if (url.searchParams.get('login') === 'true') {
+        UID = parseInt(url.searchParams.get('id'));
+        let goodCtn = document.getElementById('goodCtn');
+        let goodPrice = document.getElementById('goodPrice');
+        let totalPrice = document.getElementById('totalPrice');
+        db.ref(`TABLE/CART`).once('value', function(snapshot) {
+            let data = snapshot.val();
+            for (let i = 0; i < data[UID]['GID'].length; i++) {
+                db.ref(`TABLE/GOODS`).once('value', function(snapshot2) {
+                    let data2 = snapshot2.val();
+                    if (data[UID]['NUM'][i] > 0) {
+                        let index = data2['ID'].indexOf(data[UID]['GID'][i]);
+                        let name = data2['NAME'][index];
+                        let price = data2['PRICE'][index];
+                        let sid = data2['SELLER_ID'][index];
+                        let total = parseInt(goodPrice.innerText);
+                        total += data[UID]['NUM'][i] * price;
+                        goodPrice.innerText = `${total}`;
+                        totalPrice.innerText = `${total + 60}`;
+                        db.ref('TABLE/USER/NAME').once('value', function(snapshot3) {
+                            let data3 = snapshot3.val();
+                            goodCtn.innerHTML += `
+                            <div class='goodInfo'>
+                                <div id='goodName'>
+                                    <p>商品名稱</p><br><br><br><br>
+                                    <p>${name}</p>
+                                </div>
+                                <div id='price'>
+                                    <p>價格</p><br><br><br><br>
+                                    <p>${price}</p>
+                                </div>
+                                <div id='number'>
+                                    <p>數量</p><br><br><br><br>
+                                    <p>${data[UID]['NUM'][i]}</p>
+                                </div>
+                                <div id='total'>
+                                    <p>總金額</p><br><br><br><br>
+                                    <p>${data[UID]['NUM'][i] * price}</p>
+                                </div>
+                            </div>`
+                        });
+                    }
+                });
+
+            }
+        });
+    } else {
+        location.href = 'login.html';
+    }
+
+
     let name;
     let price;
     let total = 0;

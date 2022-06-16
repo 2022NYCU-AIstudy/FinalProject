@@ -25,8 +25,6 @@ const createNav = () => {
         <ul class="links-container">
             <li class="link-item"><a href="index.html" class="link">關於我們</a></li>
             <li class="link-item"><a href="market.html" class="link">拍賣區</a></li>
-            <li class="link-item"><a href="#" class="link">廢文區</a></li>
-            <li class="link-item"><a href="#" class="link">資源分享</a></li>
         </ul>
     `;
 }
